@@ -1,4 +1,4 @@
-name: bpo
+name: era
 channels:
   - pytorch
   - nvidia
@@ -138,4 +138,3 @@ dependencies:
       - tensorboard-data-server==0.7.2
       - tqdm==4.66.1
       - werkzeug==3.0.1
-prefix: /home/shriramc/anaconda3/envs/bpo
