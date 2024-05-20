@@ -87,7 +87,7 @@ def main(cfg) -> None:
     #Set up optimizer and bind it ONLY to the policy model
     optimizer = create_optimizer(policy_model, updated_policy_args, alignment_args, dtype, device)
 
-    #Set up the data to load into the bpo with a dataloader, use dummy data of only start tokens for now
+    #Set up the data to load into the era with a dataloader, use dummy data of only start tokens for now
     if not alignment_args['prompted']:
         assert(policy_metadata['src_start_token'] == reference_metadata['src_start_token'])
         dataset = ContextDatasetDummy(policy_metadata['src_start_token'],

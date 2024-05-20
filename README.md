@@ -1,4 +1,4 @@
-# chem-bpo
+# chem-era
 
 
 ## Installation

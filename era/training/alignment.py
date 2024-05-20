@@ -7,21 +7,21 @@ import torch.nn as nn
 from torch import Tensor
 from typing import Callable, Optional
 import re
-from bpo.training.loss_fxns import BPOLoss
+from era.training.loss_fxns import ERALoss
 
 
-def alignment_loop(bpo: BPOLoss,
+def alignment_loop(era: ERALoss,
                    dataloader: torch.utils.data.DataLoader,
                    optimizer: torch.optim.Optimizer,
                    epoch: int,
                    writer: torch.utils.tensorboard.SummaryWriter,
                    write_freq: int = 100):
     tot_loss = 0
-    bpo.policy.train()
+    era.policy.train()
     for ibatch, batch in enumerate(dataloader):
         inner_step = int(( epoch * len(dataloader)) + ibatch)
         optimizer.zero_grad()
-        loss = bpo(batch)
+        loss = era(batch)
         loss.backward()
         optimizer.step()
         if ibatch % write_freq == 0:
@@ -30,12 +30,12 @@ def alignment_loop(bpo: BPOLoss,
     writer.add_scalar("Avg. Epoch KL Loss", tot_loss / len(dataloader), epoch)
     return tot_loss / len(dataloader)
 
-def energy_distribution_loop(bpo: BPOLoss,
+def energy_distribution_loop(era: ERALoss,
                              dataloader: torch.utils.data.DataLoader):
     all_energies = []
-    bpo.policy.eval()
+    era.policy.eval()
     for ibatch, batch in enumerate(dataloader):
-        energies = bpo.get_energy_dist(batch)
+        energies = era.get_energy_dist(batch)
         all_energies.append(energies.detach().cpu().numpy())
     return np.vstack(all_energies).flatten()
 
@@ -60,7 +60,7 @@ def align_policies(energy_model: list[nn.Module],
                    dtype: torch.dtype = torch.float,
                    device: torch.device = None):
 
-    bpo_framework = BPOLoss(energy_model, 
+    era_framework = ERALoss(energy_model, 
                             betas,
                             reference, 
                             policy,
@@ -74,24 +74,24 @@ def align_policies(energy_model: list[nn.Module],
                             device=device)
     losses = []
     energies = []
-    starting_energies = energy_distribution_loop(bpo_framework, dataloader)
+    starting_energies = energy_distribution_loop(era_framework, dataloader)
     with open(f"{savedir}/energies_start.pkl", 'wb') as f:
         print("Saving energies before alignment")
         pickle.dump([starting_energies], f)
     for ep in range(nepochs):
-        avg_loss = alignment_loop(bpo_framework, dataloader, optimizer, ep, writer, write_freq)
+        avg_loss = alignment_loop(era_framework, dataloader, optimizer, ep, writer, write_freq)
         losses.append(avg_loss)
         if ep % ener_freq == 0:
             print(f"Evaluating energy distribution on epoch {ep}")
             sub_eners = []
-            energy = energy_distribution_loop(bpo_framework, dataloader)
+            energy = energy_distribution_loop(era_framework, dataloader)
             sub_eners.append(energy)
             energies.append(sub_eners)
             with open(f"{savedir}/energies_{ep}.pkl", 'wb') as handle:
                 pickle.dump(sub_eners, handle)
         if ep % ckpt_freq == 0:
             print(f"Saving checkpoint on epoch {ep}")
-            bpo_framework.save_policy(savedir=savedir, ep=ep)
+            era_framework.save_policy(savedir=savedir, ep=ep)
     
     return energies, losses
 

@@ -35,7 +35,7 @@ alignment:
     alphabet: metadatas/total_alphabet.npy
     decode: false
     model_type: Encoder
-    run_mode: bpo
+    run_mode: era
     token_limit: 200
 
 energy_model:

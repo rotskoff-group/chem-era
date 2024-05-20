@@ -71,7 +71,7 @@ def main(cfg) -> None:
     print(f"Using {len(energy_models)} energy model components")
     print(reference_model)
 
-    #Set up the data to load into the bpo with a dataloader, use dummy data of only start tokens for now
+    #Set up the data to load into the era with a dataloader, use dummy data of only start tokens for now
     data_args = cfg['data']
     dataset, _ = create_dataset(data_args, dtype, device)
     

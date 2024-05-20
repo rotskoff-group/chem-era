@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 from torch import Tensor
 from typing import Optional
-from bpo.inference.inference_fxns import infer_SMILES_generator, prompted_generation
+from era.inference.inference_fxns import infer_SMILES_generator, prompted_generation
 from functools import partial
 import numpy as np
 from rdkit import Chem as chem
@@ -13,7 +13,7 @@ BCELossWithLogits = nn.BCEWithLogitsLoss
 MSELoss = nn.MSELoss
 
 
-class BPOLoss(nn.Module):
+class ERALoss(nn.Module):
 
     def __init__(self,
                  energy_models: list[nn.Module],

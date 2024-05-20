@@ -1,4 +1,4 @@
-from bpo.data.dataset_base import SMILESDataset, SMILESDatasetPrecompute
+from era.data.dataset_base import SMILESDataset, SMILESDatasetPrecompute
 import torch
 import numpy as np
 
