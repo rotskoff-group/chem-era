@@ -1,0 +1,3 @@
+data_file: "./generative_smiles_dset.h5"
+load_to_memory: false
+inference_mode: true

@@ -1,0 +1,5 @@
+model_type: RDKitModel
+  load_model: null
+  model_args:
+    criterion: validity_logit
+    alphabet: metadatas/total_alphabet.npy

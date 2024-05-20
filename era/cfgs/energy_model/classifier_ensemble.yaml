@@ -1,0 +1,23 @@
+  model_type: "EncoderModel"
+  load_model: component_checkpoints/energy_checkpoint.pt
+  load_optimizer: false
+  model_metadata: metadatas/energy_metadata.pkl
+  ensemble_paths: null
+  model_args:
+    src_embed: 'nn.embed'
+    src_pad_token: null #Will be populated during training, leave null
+    src_forward_function: src_fwd_fxn_basic
+    d_model: 512
+    d_out: 1
+    nhead: 8
+    is_causal: True
+    permute_output: False
+    pooler: LastElemPool
+    pooler_opts: {}
+    output_head: LogitOut
+    output_head_opts:
+      d_model: 512
+      d_out: 1
+    dim_feedforward: 512
+    source_size: null #Will be populated during training, leave null
+    num_layers: 2

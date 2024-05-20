@@ -1,0 +1,96 @@
+data:
+  data_file: "./generative_smiles_dset.h5"
+  load_to_memory: true
+  inference_mode: false
+
+global_args:
+  ngpus: 1
+  dtype: float32
+  savedir: checkpoints
+  seed: 42
+
+alignment:
+  nepochs: 1000
+  ener_freq: 10
+  ckpt_freq: 100
+  importance_sample: false
+  regularize: false
+  prompted: false
+  gamma: 1.0
+  betas: null
+  n_reps: 2
+  optimizer: Adam
+  optimizer_args:
+    lr: 1.0e-05
+  scheduler: null
+  dloader_args:
+    batch_size: 128
+    shuffle: false
+  inference_options:
+    num_pred_per_tgt: 1
+    sample_val: 5
+    tgt_start_token: null
+    tgt_stop_token: null
+    track_gradients: true
+    alphabet: metadatas/total_alphabet.npy
+    decode: false
+    model_type: Encoder
+    run_mode: bpo
+    token_limit: 200
+
+energy_model:
+  model_metadata: metadatas/energy_metadata.pkl
+  model_0:
+    model_type: RDKitModel
+    load_model: null
+    model_args:
+      criterion: QED_logit
+      alphabet: metadatas/total_alphabet.npy
+
+policy_model:
+  model_type: "EncoderModel"
+  load_model: component_checkpoints/policy_checkpoint.pt
+  load_optimizer: false
+  model_metadata: metadatas/policy_metadata.pkl
+  model_args:
+    src_embed: 'nn.embed'
+    src_pad_token: null #Will be populated during training, leave null
+    src_forward_function: src_fwd_fxn_basic
+    d_model: 512
+    d_out: null #Will be imputed by encoder.yaml
+    nhead: 8
+    is_causal: True
+    permute_output: True
+    pooler: IdentityPool
+    pooler_opts: {}
+    output_head: LogitOut
+    output_head_opts:
+      d_model: 512
+      d_out: null #Will be imputed by encoder.yaml
+    dim_feedforward: 512
+    source_size: null #Will be populated during training, leave null
+    num_layers: 2
+
+reference_model:
+  model_type: "EncoderModel"
+  load_model: component_checkpoints/reference_checkpoint.pt
+  load_optimizer: false
+  model_metadata: metadatas/reference_metadata.pkl
+  model_args:
+    src_embed: 'nn.embed'
+    src_pad_token: null #Will be populated during training, leave null
+    src_forward_function: src_fwd_fxn_basic
+    d_model: 512
+    d_out: null #Will be imputed by encoder.yaml
+    nhead: 8
+    is_causal: True
+    permute_output: True
+    pooler: IdentityPool
+    pooler_opts: {}
+    output_head: LogitOut
+    output_head_opts:
+      d_model: 512
+      d_out: null #Will be imputed by encoder.yaml
+    dim_feedforward: 512
+    source_size: null #Will be populated during training, leave null
+    num_layers: 2

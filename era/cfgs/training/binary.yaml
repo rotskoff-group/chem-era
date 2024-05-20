@@ -1,0 +1,22 @@
+  nepochs: 10
+  top_checkpoints_n: 10
+  checkpoint_loss_metric: val
+  write_freq: 100
+  test_freq: 10
+  prev_epochs: 0
+  splits: null
+  train_size: 0.8
+  val_size: 0.1
+  test_size: 0.1
+  optimizer: Adam
+  optimizer_args:
+    lr: 1.0e-05
+  scheduler: null
+  dloader_args:
+    shuffle: false
+    batch_size: 64
+  loss_fn: BCELossWithLogits
+  loss_fn_args: null
+  sample: true
+  strategy: ddp
+  restarting: false

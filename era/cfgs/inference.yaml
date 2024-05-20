@@ -1,0 +1,14 @@
+defaults:
+  - data: generator_inference 
+  - model: generator
+  - inference: generator_inference 
+  - override hydra/launcher: sherlock
+  - _self_
+
+
+global_args:
+  ngpus: 1
+  dtype: float32
+  savedir: checkpoints
+  seed: 42
+

@@ -1,0 +1,21 @@
+model_type: "EncoderModel"
+load_model: null
+load_optimizer: false
+model_args:
+  src_embed: 'nn.embed'
+  src_pad_token: null #Will be populated during training, leave null
+  src_forward_function: src_fwd_fxn_basic
+  d_model: 512
+  d_out: null #Will be imputed by encoder.yaml
+  nhead: 8
+  is_causal: True
+  permute_output: True
+  pooler: IdentityPool
+  pooler_opts: {}
+  output_head: LogitOut
+  output_head_opts:
+    d_model: 512
+    d_out: null #Will be imputed by encoder.yaml
+  dim_feedforward: 512
+  source_size: null #Will be populated during training, leave null
+  num_layers: 2

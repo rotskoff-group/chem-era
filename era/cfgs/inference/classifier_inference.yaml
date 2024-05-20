@@ -1,0 +1,17 @@
+  model_selection: "lowest"
+  splits: null
+  train_size: 0.8
+  val_size: 0.1
+  test_size: 0.1
+  local_rank: 0
+  n_procs: 1
+  dloader_args:
+    shuffle: false
+    batch_size: 512
+  sets_to_run: ['test']
+  run_inference_args:
+    pred_gen_fn: 'infer_basic_model'
+    pred_gen_opts:
+      track_gradients: true
+      alphabet: null
+    write_freq: 100

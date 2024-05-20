@@ -1,0 +1,16 @@
+defaults:
+  - submitit_slurm
+
+_target_: hydra_plugins.hydra_submitit_launcher.submitit_launcher.SlurmLauncher
+timeout_min: 10 # 2 hours
+tasks_per_node: 1
+nodes: 1
+name: ${hydra.job.name}
+comment: null
+exclude: null
+signal_delay_s: 600
+max_num_timeout: 20
+partition: rotskoff
+additional_parameters: {}
+array_parallelism: 4
+setup: []

@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "chem-era"
+version = "0.0.1"
+authors = [
+  { name="Shriram Chennakesavalu", email="shriramc@stanford.edu" },
+  { name="Frank Hu", email="frankhu@stanford.edu" },
+  { name="Grant Rotskoff", email="rotskoff@stanford.edu" }
+]
+description = "Energy Rank Alignment: Using Preference Optimization to Search Chemical Space at Scale"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/rotskoff-group/chem-era"
+
+[project.scripts]
+era_train = "era.scripts.era_train_lightning:main"
+era_train_precompute = "era.scripts.train_precompute:main"
+era_infer = "era.scripts.era_inference:main"
+era_align = "era.scripts.era_align_lightning:main"
+era_alignment_precompute = "era.scripts.alignment_precompute:main"
