@@ -1,5 +1,5 @@
 # Energy Rank Alignment: Using Preference Optimization to Search Chemical Space at Scale
---
+
 Official implementation of: 
 
 **Energy Rank Alignment: Using Preference Optimization to Search Chemical Space at Scale**
