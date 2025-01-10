@@ -26,3 +26,5 @@ transformers to generate molecules with externally specified properties and find
 does so robustly, searching through diverse parts of chemical space. While our focus here
 is on chemical search, we also obtain excellent results on an AI supervised task for LLM
 alignment, showing that the method is scalable and general.
+
+Weights can be found on Hugging Face at https://huggingface.co/frankhu1/molgpt
